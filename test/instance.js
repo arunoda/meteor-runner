@@ -12,7 +12,7 @@ suite('Instance', function() {
 
     test('running okay', function(done) {
       var script = path.resolve(__dirname, 'scripts/longRunning.js');
-      var i = new Instance(script);
+      var i = new Instance(script, {env: {ALLOW: true}});
       i.start();
       setTimeout(function() {
         assert.equal(i.isRunning(), true);
@@ -23,7 +23,7 @@ suite('Instance', function() {
 
     test('failing', function(done) {
       var script = path.resolve(__dirname, 'scripts/failFast.js');
-      var i = new Instance(script, {spinSleepTime: 100, silent: true});
+      var i = new Instance(script, {spinSleepTime: 100, silent: true, env: {ALLOW: true}});
       i.start();
       setTimeout(function() {
         assert.equal(i.isRunning(), false);
@@ -35,7 +35,7 @@ suite('Instance', function() {
     test('failed and restarted', function(done) {
       var fileName = '/tmp/sssd.lock';
       var script = path.resolve(__dirname, 'scripts/failOnFileNotExists.js');
-      var i = new Instance(script, {spinSleepTime: 100, silent: true, env: {FILE_NAME: fileName}});
+      var i = new Instance(script, {spinSleepTime: 100, silent: true, env: {FILE_NAME: fileName, ALLOW: true}});
       i.start();
       setTimeout(function() {
         assert.equal(i.isRunning(), true);

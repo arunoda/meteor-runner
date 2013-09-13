@@ -1,3 +1,7 @@
+if(!process.env.ALLOW) {
+  return;
+}
+
 var fileName = process.env.FILE_NAME;
 var fs = require('fs');
 
