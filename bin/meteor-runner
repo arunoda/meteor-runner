@@ -25,3 +25,5 @@ if(optionsParser.config) {
 } else {
   console.error('config file is required!\nuse -p to print a sample config file');
 }
+
+console.log(process.pid);
