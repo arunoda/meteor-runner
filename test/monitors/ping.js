@@ -4,19 +4,19 @@ var http = require('http');
 
 suite('Ping', function() {
   suite('options check', function() {
-    // test('no such port', function(done) {
-    //   var p;
-    //   var instance = {
-    //     isRunning: function() {return true;},
-    //     restart: function() {
-    //       p.stop();
-    //       done();
-    //     }
-    //   };
+    test('no such port', function(done) {
+      var p;
+      var instance = {
+        isRunning: function() {return true;},
+        restart: function() {
+          p.stop();
+          done();
+        }
+      };
 
-    //   p = new Ping(instance, {port: 3434, interval: 100, timeout: 50, threshold: 3, silence: true});
-    //   p.start();
-    // });
+      p = new Ping(instance, {port: 3434, interval: 100, timeout: 50, threshold: 3, silence: true});
+      p.start();
+    });
 
     test('timeout execeded', function(done) {
       var p;
