@@ -14,7 +14,7 @@ suite('Ping', function() {
         }
       };
 
-      p = new Ping(instance, {port: 3434, interval: 100, timeout: 50, threshold: 3});
+      p = new Ping(instance, {port: 3434, interval: 100, timeout: 50, threshold: 3, silence: true});
       p.start();
     });
 
@@ -36,7 +36,7 @@ suite('Ping', function() {
       });
 
       server.listen(5000, function() {
-        p = new Ping(instance, {port: 5000, interval: 100, timeout: 50, threshold: 3});
+        p = new Ping(instance, {port: 5000, interval: 100, timeout: 50, threshold: 3, silence: true});
         p.start();
       });
     });
@@ -59,7 +59,7 @@ suite('Ping', function() {
       });
 
       server.listen(5000, function() {
-        p = new Ping(instance, {port: 5000, interval: 100, timeout: 50, threshold: 3});
+        p = new Ping(instance, {port: 5000, interval: 100, timeout: 50, threshold: 3, silence: true});
         p.start();
       });
     });
@@ -76,16 +76,14 @@ suite('Ping', function() {
         }
       };
 
-      p = new Ping(instance, {port: 3434, interval: 100, timeout: 50, threshold: 3});
+      p = new Ping(instance, {port: 3434, interval: 100, timeout: 50, threshold: 3, silence: true});
       p.start();
     });
 
     test('pingFailed and instance not running', function(done) {
-      var isRunningChecked = 0;
       var p;
       var instance = {
         isRunning: function() {
-          isRunningChecked++;
           return false;
         },
         restart: function() {
@@ -93,33 +91,31 @@ suite('Ping', function() {
         }
       };
 
-      p = new Ping(instance, {port: 3434, interval: 100, timeout: 50, threshold: 3});
+      p = new Ping(instance, {port: 3434, interval: 100, timeout: 50, threshold: 3, silence: true});
       p.start();
 
       setTimeout(function() {
-        assert.equal(isRunningChecked, 1);
         done();
       }, 400);
     });
 
     test('pingFailed twice', function(done) {
-      var isRunningChecked = 0;
+      var restartCount = 0;
       var p;
       var instance = {
         isRunning: function() {
-          isRunningChecked++;
-          return false;
+          return true;
         },
         restart: function() {
-          assert.failed('should not call restart')
+          restartCount++;
         }
       };
 
-      p = new Ping(instance, {port: 3434, interval: 100, timeout: 50, threshold: 3});
+      p = new Ping(instance, {port: 3434, interval: 100, timeout: 50, threshold: 3, silence: true});
       p.start();
 
       setTimeout(function() {
-        assert.equal(isRunningChecked, 2);
+        assert.equal(restartCount, 2);
         done();
       }, 700);
     });
@@ -128,7 +124,7 @@ suite('Ping', function() {
       var p;
       var server;
       var instance = {
-        isRunning: function() { assert.fail('should not check isRunning'); },
+        isRunning: function() { return true },
         restart: function() { assert.fail('should not check restart'); }
       };
 
@@ -158,7 +154,7 @@ suite('Ping', function() {
       var p;
       var server;
       var instance = {
-        isRunning: function() { assert.fail('should not check isRunning'); },
+        isRunning: function() { return true },
         restart: function() { assert.fail('should not check restart'); }
       };
 
@@ -173,7 +169,7 @@ suite('Ping', function() {
       });
 
       server.listen(5002, function() {
-        p = new Ping(instance, {port: 5002, interval: 100, timeout: 50, threshold: 3});
+        p = new Ping(instance, {port: 5002, interval: 100, timeout: 50, threshold: 3, silence: true});
         p.start();
       });
 
