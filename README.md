@@ -1,4 +1,4 @@
 meteor-runner
 =============
 
-Best way to run meteor apps in production
+Better way to run meteor apps in production

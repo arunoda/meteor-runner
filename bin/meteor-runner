@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --expose-gc
 var commander = require('commander');
 var path = require('path');
 var App = require('../lib/app');
@@ -25,3 +25,9 @@ if(optionsParser.config) {
 } else {
   console.error('config file is required!\nuse -p to print a sample config file');
 }
+
+setInterval(function() {
+  if(typeof(gc) == 'function') {
+    gc();
+  }
+}, 1000 * 60 * 5);
