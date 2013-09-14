@@ -1,6 +1,6 @@
 {
   "name": "meteor-runner",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Better way to run Meteor Apps",
   "dependencies": {
     "forever-monitor": "1.2.x",
