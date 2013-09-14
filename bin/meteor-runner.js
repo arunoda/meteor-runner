@@ -1,4 +1,3 @@
-#!/usr/bin/env node --expose-gc
 var commander = require('commander');
 var path = require('path');
 var App = require('../lib/app');
@@ -19,16 +18,16 @@ if(optionsParser.config) {
   }
 
   new App(config).start();
+
+  if(typeof(gc) == 'function') {
+    console.log(' >> .gc() every 5 min to keep low memory profile');
+    setInterval(function() {
+      gc();
+    }, 1000 * 60 * 5);
+  }
 } else if(optionsParser.print) {
   var sampleConfig = require('../lib/sampleConfig');
   console.log(JSON.stringify(sampleConfig, null, 4));
 } else {
   console.error('config file is required!\nuse -p to print a sample config file');
-}
-
-if(typeof(gc) == 'function') {
-  console.log(' >> .gc() every 5 min to keep low memory profile');
-  setInterval(function() {
-    gc();
-  }, 1000 * 60 * 5);
 }

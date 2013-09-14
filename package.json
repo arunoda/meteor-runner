@@ -13,6 +13,6 @@
     "test": "./node_modules/.bin/mocha"
   },
   "bin": {
-    "meteor-runner": "./bin/meteor-runner"
+    "meteor-runner": "./bin/_meteor-runner"
   }
 }

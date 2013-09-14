@@ -1,0 +1,4 @@
+#!/bin/bash
+
+ACTUAL_DIR=`python -c "import os; print os.path.dirname(os.path.realpath('$BASH_SOURCE'))"`
+node --expose-gc $ACTUAL_DIR/meteor-runner.js $@
